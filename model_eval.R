@@ -6,8 +6,6 @@ library(xlsx)
 library(dplyr)
 library(tidyr)
 
-
-setwd('C:\\Users\\rjagtani\\OneDrive - Tata industries\\Confidential\\2017-18\\Projects\\Functions\\Model Evaluation Binary Classification')
 df1=read.csv('train_titanic.csv')
 train_test_split=sample.split(df1$Survived)
 df1_train=df1[train_test_split,]
