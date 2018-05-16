@@ -1,25 +1,25 @@
 library(caret)
-#library(caTools)
 library(data.table)
 library(mltools)
 library(xlsx)
 library(dplyr)
 library(tidyr)
 
-df1=read.csv('train_titanic.csv')
-train_test_split=sample.split(df1$Survived)
-df1_train=df1[train_test_split,]
-df1_test=df1[!train_test_split,]
-a=glm(data=df1_train,formula=Survived~Sex+Fare,family = 'binomial')
-pred=a$fitted.values
-actual=df1_train$Survived
-pred_test=predict(a,newdata=df1_test,type='response')
-actual_test=df1_test$Survived
+
+#df1=read.csv('train_titanic.csv')
+#library(caTools)
+#train_test_split=sample.split(df1$Survived)
+#df1_train=df1[train_test_split,]
+#df1_test=df1[!train_test_split,]
+#a=glm(data=df1_train,formula=Survived~Sex+Fare,family = 'binomial')
+#pred=a$fitted.values
+#actual=df1_train$Survived
+#pred_test=predict(a,newdata=df1_test,type='response')
+#actual_test=df1_test$Survived
 
 model_eval=function(pred_prob,actual_values,prob_cutoff=0.5,filename='model_eval',ntile=10,pred_prob_test=NULL,actual_values_test=NULL)
 {
   
-  #pred_prob=pred;actual_values=actual;prob_cutoff=0.5;pred_class=NULL
   me <- createWorkbook(type='xlsx')
   metrics_sheet=createSheet(wb=me,sheetName ='Train Evaluation Metrics')
   
@@ -71,8 +71,7 @@ model_eval=function(pred_prob,actual_values,prob_cutoff=0.5,filename='model_eval
   print(ggplot(data=lift_table2,aes(bucket)) + geom_line(aes(y=Cumresp_percent,col='Cum % 1s')) + geom_point(aes(y=Cumresp_percent),col='blue') + geom_line(aes(y=Cumnonresp_percent,col='Cum % 0s')) + geom_point(aes(y=Cumnonresp_percent),col='red') + labs(aes(x='\nDecile',y='Cumulative Percentage\n')) + scale_x_continuous(breaks = 1:10) + theme_minimal()  + theme(axis.title = element_text(colour = "dodgerblue4"),plot.title = element_text(size= 15 ,hjust = 0.4,color='dodgerblue4',family='serif')) + ggtitle('Cumulative Percent Events vs Non Events') + labs(colour='') + geom_text(aes(x=9,y=0.16,label=paste0('KS : ',round(ks_stats[1]*100,2),' %')),color='dodgerblue4'))
   dev.off()
   colnames(lift_table)=c('NTile','Total Records','Total 1s','Total 0s','Cumulative 1s','Cumulative 1s percent','Cumulative 0s','Cumulative 0s percent','Cumulative percent difference','Gain','Cumulative lift')
-  #saveWorkbook(me,'model_eval.xlsx')
-  #res=file.remove("cumulative_ones_curve.png")
+  
   
   
   ############  Confusion Matrix
