@@ -16,3 +16,4 @@ The output of the function contains the following :
 3. Charts - ROC Curve , Cumulative Events vs Non Events , Cumulative Lift Chart vs Ntile
 
 
+Function call : model_eval(actual_values = actual,pred_prob = pred,filename='mv1',pred_prob_test = pred_test,actual_values_test = actual_test)
