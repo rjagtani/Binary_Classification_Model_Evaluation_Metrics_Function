@@ -8,7 +8,7 @@ List of arguments -
 2) actual_values(numeric/integer/factor) : vector of actual_values of the dependent_variable. Takes only two values - 0 & 1 where 0 is non event and 1 is event.
 3)threshold_optimize_metric(char) : Metric maximized to find optimal threshold probability for classifying 0s and 1s. Used to calculate Confusion Matrix and other related metrics. Metrics available : 'accuracy','kappa','f1_score','youdens_statistic'; Default : 'accuracy'
 4) ntile(int) : number of buckets required for Lift table ( Default is 10 - deciles )
-5) filename(char) : name of excel file passed as a character vector (.xlsx need not be included in filename)
+5) filename(char) : name of excel file passed as a character vector (.xlsx need not be included in filename);Default : 'demo_file'
 6) pred_prob_test(numeric) : estimated probability output of the model on test dataset;optional
 7) actual_values_test(numeric/integer) : integer vector of actual_values of the_dependent_variable for test dataset;optional
 
@@ -18,4 +18,5 @@ The output of the function contains the following :
 3. Charts - ROC Curve , Cumulative Events vs Non Events , Cumulative Lift Chart vs Ntile
 
 
-Function call : model_eval(actual_values = actual,pred_prob = pred,filename='mv1',pred_prob_test = pred_test,actual_values_test = actual_test)
+Function call : 
+model_eval(actual_values = actual,pred_prob = pred,filename='model_validation',ntile=5,pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric='kappa')
