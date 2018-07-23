@@ -1,17 +1,19 @@
 # Binary_Classification_Model_Evaluation_Metrics_Function
-A function which takes model probability and actual values as argument and returns an xlsx with model evaluation metrics (Gini,KS,AUC,Lift Table &amp; Charts,Confusion Matrix,Precision,Recall etc) for training and test datsets.
+A function which takes model probability and actual values as argument and returns an xlsx with model evaluation metrics (Gini,KS,AUC,Lift Table,Confusion Matrix,Precision,Recall etc) for training and test datsets.
+Update 1 : Includes publication quality charts such as Cumulative Lift Chart, ROC Curve & Cumulative Events vs Non Events
+Update 2 : Incudes option to optimize threshold by maximizing model performance metrics such as Accuracy,F1-Score,Kappa Value & Youden's J Statistic. The confusion matrix is then obtained using this optimized threshold.
 
 List of arguments -
-1) pred_prob : estimated probability output of the model
-2) actual_values : integer vector of actual_values of the dependent_variable
-3) prob_cutoff : Threshold probability for classifying 0s and 1s. Used to calculate Confusion Matrix and other related metrics.Default is taken as 0.5
-4) ntile : number of buckets required for Lift table ( Default is 10 - deciles )
-5) filename : name of excel file passed as a character vector (.xlsx need not be included in filename)
-6) pred_prob_test : estimated probability output of the model for test dataset;optional
-7) actual_values_test : integer vector of actual_values of the_dependent_variable for test dataset;optional
+1) pred_prob(numeric) : estimated probability output of the model
+2) actual_values(numeric/integer/factor) : vector of actual_values of the dependent_variable. Takes only two values - 0 & 1 where 0 is non event and 1 is event.
+3)threshold_optimize_metric(char) : Metric maximized to find optimal threshold probability for classifying 0s and 1s. Used to calculate Confusion Matrix and other related metrics. Metrics available : 'accuracy','kappa','f1_score','youdens_statistic'; Default : 'accuracy'
+4) ntile(int) : number of buckets required for Lift table ( Default is 10 - deciles )
+5) filename(char) : name of excel file passed as a character vector (.xlsx need not be included in filename)
+6) pred_prob_test(numeric) : estimated probability output of the model on test dataset;optional
+7) actual_values_test(numeric/integer) : integer vector of actual_values of the_dependent_variable for test dataset;optional
 
 The output of the function contains the following :
-1. Metrics - AUC,Gini,KS_value,Confusion Matrix,Accuracy,Kappa,No Information Rate,Sensitivity,Specificity,Pos Pred Value,Neg Pred Value,F1,Prevalence,KS_decile 
+1. Metrics - AUC,Gini,KS_value,Confusion Matrix using optimized threshold,Accuracy,Kappa,No Information Rate,Sensitivity,Specificity,Pos Pred Value,Neg Pred Value,F1,Prevalence,KS_decile,Optimized Threshold
 2. Table - Lift table with Gains and Cumulative Lift
 3. Charts - ROC Curve , Cumulative Events vs Non Events , Cumulative Lift Chart vs Ntile
 
