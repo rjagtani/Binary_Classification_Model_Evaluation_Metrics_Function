@@ -158,4 +158,4 @@ model_eval=function(pred_prob,actual_values,filename='model_eval',ntile=10,pred_
 # pred_test=predict(a,newdata=df_test,type='response')
 # actual_test=df_test$Survived
 
-model_eval(actual_values = actual,pred_prob = pred,filename='demo_file',pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric = 'accuracy')
+model_eval(actual_values = actual,pred_prob = pred,filename='demo_output',pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric = 'accuracy')
