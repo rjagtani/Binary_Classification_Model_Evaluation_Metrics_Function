@@ -4,7 +4,7 @@ library(caret)
 library(xlsx)
 library(dplyr)
 
-#####
+##### Function Body
 
 model_eval=function(pred_prob,actual_values,filename='model_eval',ntile=10,pred_prob_test=NULL,actual_values_test=NULL,threshold_optimize_metric='accuracy')
 {
