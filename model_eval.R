@@ -56,7 +56,7 @@ model_eval=function(pred_prob,actual_values,filename='model_eval',ntile=10,pred_
                Cumlift=Gain/(bucket*(100/groups)))
       gaintable=as.data.frame(gaintable)
       ks=c(max(gaintable$Cum_resp_minus_cum_non_resp),which.max(gaintable$Cum_resp_minus_cum_non_resp))
-      names(ks)=c('KS_value','KS_decile')
+      names(ks)=c('KS_value','KS_Ntile')
       return(list(gaintable,ks))
     }  
     
@@ -66,7 +66,7 @@ model_eval=function(pred_prob,actual_values,filename='model_eval',ntile=10,pred_
     ks_stats=cumulative_table[[2]]
     #lift_curve_sheet=createSheet(wb=me,sheetName = 'Lift Curve')
     png("cumulative_lift_curve.png", height=800, width=1200, res=250, pointsize=8)
-    print(ggplot(data=lift_table,aes(x=bucket,y=Cumlift))  + geom_point(color='black') + geom_line(color='dodgerblue4')   + labs(aes(x='\nDecile',y='Cumulative Lift\n',colour='dodgerblue4')) + scale_x_continuous(breaks = 1:10) + theme_minimal() + theme(axis.title = element_text(colour = "dodgerblue4"),plot.title = element_text(size=15,family='serif',hjust = 0.4,color='dodgerblue4')) + ggtitle('Cumulative Lift Chart') + geom_text(aes(x=lift_table$bucket,y=lift_table$Cumlift,label=round(lift_table$Cumlift,1)),position = position_nudge(x=0.25,y = 0.1),color='dodgerblue4'))
+    print(ggplot(data=lift_table,aes(x=bucket,y=Cumlift))  + geom_point(color='black') + geom_line(color='dodgerblue4')   + labs(aes(x='\nNtile',y='Cumulative Lift\n',colour='dodgerblue4')) + scale_x_continuous(breaks = 1:ntile) + theme_minimal() + theme(axis.title = element_text(colour = "dodgerblue4"),plot.title = element_text(size=15,family='serif',hjust = 0.4,color='dodgerblue4')) + ggtitle('Cumulative Lift Chart') + geom_text(aes(x=lift_table$bucket,y=lift_table$Cumlift,label=round(lift_table$Cumlift,1)),position = position_nudge(x=0.25,y = 0.1),color='dodgerblue4'))
     dev.off()
     
     ######## Cumulative 1s vs 0s
@@ -75,7 +75,7 @@ model_eval=function(pred_prob,actual_values,filename='model_eval',ntile=10,pred_
     colnames(lift_table_1)=colnames(lift_table)
     lift_table2=rbind(lift_table_1,lift_table)
     png("cumulative_ones_curve.png", height=800, width=1300, res=250, pointsize=8)
-    print(ggplot(data=lift_table2,aes(bucket)) + geom_line(aes(y=Cumresp_percent,col='Cum % 1s')) + geom_point(aes(y=Cumresp_percent),col='blue') + geom_line(aes(y=Cumnonresp_percent,col='Cum % 0s')) + geom_point(aes(y=Cumnonresp_percent),col='red') + labs(aes(x='\nDecile',y='Cumulative Percentage\n')) + scale_x_continuous(breaks = 1:10) + theme_minimal()  + theme(axis.title = element_text(colour = "dodgerblue4"),plot.title = element_text(size= 15 ,hjust = 0.4,color='dodgerblue4',family='serif')) + ggtitle('Cumulative Percent Events vs Non Events') + labs(colour='') + geom_text(aes(x=9,y=0.16,label=paste0('KS : ',round(ks_stats[1]*100,2),' %')),color='dodgerblue4'))
+    print(ggplot(data=lift_table2,aes(bucket)) + geom_line(aes(y=Cumresp_percent,col='Cum % 1s')) + geom_point(aes(y=Cumresp_percent),col='blue') + geom_line(aes(y=Cumnonresp_percent,col='Cum % 0s')) + geom_point(aes(y=Cumnonresp_percent),col='red') + labs(aes(x='\nNtile',y='Cumulative Percentage\n')) + scale_x_continuous(breaks = 1:ntile) + theme_minimal()  + theme(axis.title = element_text(colour = "dodgerblue4"),plot.title = element_text(size= 15 ,hjust = 0.4,color='dodgerblue4',family='serif')) + ggtitle('Cumulative Percent Events vs Non Events') + labs(colour='') + geom_text(aes(x=(ntile-1),y=0.16,label=paste0('KS : ',round(ks_stats[1]*100,2),' %')),color='dodgerblue4'))
     dev.off()
     colnames(lift_table)=c('NTile','Total Records','Total 1s','Total 0s','Cumulative 1s','Cumulative 1s percent','Cumulative 0s','Cumulative 0s percent','Cumulative percent difference','Gain','Cumulative lift')
     
@@ -158,4 +158,4 @@ model_eval=function(pred_prob,actual_values,filename='model_eval',ntile=10,pred_
 # pred_test=predict(a,newdata=df_test,type='response')
 # actual_test=df_test$Survived
 
-model_eval(actual_values = actual,pred_prob = pred,filename='mv9',pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric = 'accuracy')
+model_eval(actual_values = actual,pred_prob = pred,filename='demo_file',pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric = 'accuracy')
