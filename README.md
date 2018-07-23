@@ -18,7 +18,18 @@ The output of the function contains the following :
 3. Charts - ROC Curve , Cumulative Events vs Non Events , Cumulative Lift Chart vs Ntile
 
 
-Function call : 
-model_eval(actual_values = actual,pred_prob = pred,filename='demo_file',ntile=10,pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric='accuracy')
+Demo Function call : 
+df=read.csv('train_titanic.csv')
+library(caTools)
+set.seed(42)
+train_test_split=sample.split(df$Survived)
+df_train=df[train_test_split,]
+df_test=df[!train_test_split,]
+a=glm(data=df_train,formula=Survived~Sex+Fare,family = 'binomial')
+pred=a$fitted.values
+actual=df_train$Survived
+pred_test=predict(a,newdata=df_test,type='response')
+actual_test=df_test$Survived
+model_eval(actual_values = actual,pred_prob = pred,filename='demo_output',ntile=10,pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric='accuracy')
 
-#### Output of this function call (demo_file.xlsx) and modelling dataset (train_titanic.csv) provided in Repository
+#### Output of this function call (demo_output.xlsx) and modelling dataset (train_titanic.csv) provided in Repository
