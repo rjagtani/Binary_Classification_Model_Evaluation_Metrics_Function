@@ -19,4 +19,6 @@ The output of the function contains the following :
 
 
 Function call : 
-model_eval(actual_values = actual,pred_prob = pred,filename='model_validation',ntile=5,pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric='kappa')
+model_eval(actual_values = actual,pred_prob = pred,filename='demo_file',ntile=10,pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric='accuracy')
+
+#### Output of this function call (demo_file.xlsx) and modelling dataset (train_titanic.csv) provided in Repository
