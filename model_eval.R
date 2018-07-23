@@ -1,24 +1,12 @@
+#### Required Packages
+
 library(caret)
 library(xlsx)
 library(dplyr)
 
-####
-
-# df1=read.csv('train_titanic.csv')
-# library(caTools)
-# set.seed(42)
-# train_test_split=sample.split(df1$Survived)
-# df1_train=df1[train_test_split,]
-# df1_test=df1[!train_test_split,]
-# a=glm(data=df1_train,formula=Survived~Sex+Fare,family = 'binomial')
-# pred=a$fitted.values
-# actual=df1_train$Survived
-# pred_test=predict(a,newdata=df1_test,type='response')
-# actual_test=df1_test$Survived
-
 #####
 
-model_eval=function(pred_prob,actual_values,prob_cutoff=0.5,filename='model_eval',ntile=10,pred_prob_test=NULL,actual_values_test=NULL,threshold_optimize_metric='accuracy')
+model_eval=function(pred_prob,actual_values,filename='model_eval',ntile=10,pred_prob_test=NULL,actual_values_test=NULL,threshold_optimize_metric='accuracy')
 {
   
   me <- createWorkbook(type='xlsx')
@@ -157,5 +145,17 @@ model_eval=function(pred_prob,actual_values,prob_cutoff=0.5,filename='model_eval
 
 
 #### Demo Function Call
+
+# df=read.csv('train_titanic.csv')
+# library(caTools)
+# set.seed(42)
+# train_test_split=sample.split(df$Survived)
+# df_train=df[train_test_split,]
+# df_test=df[!train_test_split,]
+# a=glm(data=df_train,formula=Survived~Sex+Fare,family = 'binomial')
+# pred=a$fitted.values
+# actual=df_train$Survived
+# pred_test=predict(a,newdata=df_test,type='response')
+# actual_test=df_test$Survived
 
 model_eval(actual_values = actual,pred_prob = pred,filename='mv9',pred_prob_test = pred_test,actual_values_test = actual_test,threshold_optimize_metric = 'accuracy')
